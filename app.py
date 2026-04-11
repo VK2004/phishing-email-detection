@@ -289,6 +289,11 @@ def train_models(_df):
 
 
 # ── Plot colours ──────────────────────────────────────────────────────────────
+plt.rcParams['figure.dpi']     = 150
+plt.rcParams['savefig.dpi']    = 150
+plt.rcParams['lines.antialiased'] = True
+plt.rcParams['path.simplify']  = False   # keep every data point, no simplification
+
 SURFACE  = "#13161e"
 SURFACE2 = "#1a1e28"
 BORDER   = "#2a2f45"
@@ -516,7 +521,9 @@ with tab2:
 
     st.markdown("---")
     st.subheader("ROC curves")
-    st.pyplot(plot_roc(results), use_container_width=True)
+    col_roc, col_pad = st.columns([1, 1])
+    with col_roc:
+        st.pyplot(plot_roc(results), use_container_width=False)
 
 
 # ══════════════════════════════════════
