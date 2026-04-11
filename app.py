@@ -341,21 +341,48 @@ def plot_confusion_matrix(cm, model_name):
 
 
 def plot_roc(results):
-    fig, ax = plt.subplots(figsize=(5, 4))
+    fig, ax = plt.subplots(figsize=(4, 3.2), dpi=150)  # smaller size, higher DPI
     colors = [ACCENT, SAFE, PHISH, AMBER]
+    
     for (name, res), col in zip(results.items(), colors):
         fpr, tpr = res["fpr_tpr"]
-        ax.plot(fpr, tpr, color=col, linewidth=2,
-                label=f"{name} (AUC={res['roc_auc']:.3f})")
-    ax.plot([0, 1], [0, 1], "--", color=BORDER, linewidth=1)
+        ax.plot(
+            fpr, tpr,
+            color=col,
+            linewidth=1.5,
+            antialiased=True,
+            solid_capstyle='round',
+            solid_joinstyle='round',
+            label=f"{name} (AUC={res['roc_auc']:.3f})"
+        )
+    
+    ax.plot(
+        [0, 1], [0, 1],
+        "--",
+        color=BORDER,
+        linewidth=0.8,
+        dashes=(4, 4),
+        dash_capstyle='butt'
+    )
     ax.fill_between([0, 1], [0, 1], alpha=0.03, color=ACCENT)
-    ax.set_xlabel("False Positive Rate")
-    ax.set_ylabel("True Positive Rate")
-    ax.set_title("ROC Curves — All Models", color=TEXT, fontsize=11, pad=10)
-    legend = ax.legend(fontsize=8, framealpha=0.2, labelcolor=TEXT)
+    ax.set_xlabel("False Positive Rate", fontsize=8)
+    ax.set_ylabel("True Positive Rate", fontsize=8)
+    ax.set_title("ROC Curves — All Models", color=TEXT, fontsize=9, pad=8)
+    
+    legend = ax.legend(
+        fontsize=7,
+        framealpha=0.2,
+        labelcolor=TEXT,
+        loc='lower right',
+        borderpad=0.6,
+        handlelength=1.5
+    )
     legend.get_frame().set_facecolor(SURFACE2)
     legend.get_frame().set_edgecolor(BORDER)
+    legend.get_frame().set_linewidth(0.5)
+    
     style_fig(fig)
+    fig.tight_layout(pad=0.8)
     return fig
 
 
