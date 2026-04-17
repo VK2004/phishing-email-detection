@@ -635,30 +635,92 @@ with tab4:
             ),
         },
     }
-    if "email_text" not in st.session_state:
-        st.session_state.email_text = list(samples.values())[0]
-
-    for (label, text), col in zip(samples.items(), [qc1, qc2, qc3, qc4]):
+    def render_email_preview(sample: dict) -> str:
+        """Return an HTML string that looks like an email client panel."""
+        body_html = sample["body"].replace("\n", "<br>")
+ 
+        # Build optional header rows (date, reply-to) only when present
+        def header_row(label, value, bold=False):
+            weight = "font-weight:600;" if bold else ""
+            return (
+                f'<div style="margin-bottom:5px;">' +
+                f'<span style="color:#7a8099;font-size:11px;width:72px;display:inline-block;">{label}</span>' +
+                f'<span style="color:#c8cadf;{weight}">{value}</span>' +
+                f'</div>'
+            )
+ 
+        header_rows = header_row("From", sample["from"])
+        if sample.get("date"):
+            header_rows += header_row("Date", sample["date"])
+        header_rows += header_row("To", sample["to"])
+        if sample.get("reply_to"):
+            header_rows += header_row("Reply-To", sample["reply_to"])
+        header_rows += header_row("Subject", sample["subject"], bold=True)
+ 
+        return f"""
+        <div style="
+            background:#1a1d2e;
+            border:1px solid #2e3250;
+            border-radius:10px;
+            font-family:'Segoe UI',Arial,sans-serif;
+            font-size:13px;
+            overflow:hidden;
+            margin-bottom:12px;
+        ">
+            <div style="background:#12142a;padding:14px 18px;border-bottom:1px solid #2e3250;">
+                {header_rows}
+            </div>
+            <div style="padding:18px 20px;color:#c8cadf;line-height:1.75;">
+                {body_html}
+            </div>
+        </div>
+        """
+ 
+    # ── Quick-load buttons ────────────────────────────────────────────────
+    st.markdown("**Quick samples:**")
+    qc1, qc2, qc3, qc4 = st.columns(4)
+ 
+    if "selected_sample_key" not in st.session_state:
+        st.session_state.selected_sample_key = "⚠️ Phishing #1"
+ 
+    for (label,), col in zip(
+        [(k,) for k in SAMPLES], [qc1, qc2, qc3, qc4]
+    ):
         if col.button(label, use_container_width=True):
-            st.session_state.email_text = text
-
+            st.session_state.selected_sample_key = label
+ 
+    # Show structured email preview for quick samples
+    active_key    = st.session_state.selected_sample_key
+    active_sample = SAMPLES[active_key]
+ 
+    st.markdown(render_email_preview(active_sample), unsafe_allow_html=True)
+ 
+    # Editable text area pre-filled with just the body text
+    if "email_text" not in st.session_state:
+        st.session_state.email_text = active_sample["body"]
+ 
+    # Sync text area when sample changes
+    if st.session_state.get("_last_sample") != active_key:
+        st.session_state.email_text  = active_sample["body"]
+        st.session_state._last_sample = active_key
+ 
     email_input = st.text_area(
-        "Email text",
+        "✏️ Edit email body before classifying (or paste your own email)",
         value=st.session_state.email_text,
-        height=130,
-        placeholder="Paste or type an email here…",
+        height=160,
+        placeholder="Paste or type an email body here…",
     )
-
+ 
     if st.button("🔍 Classify", type="primary", use_container_width=True):
         if email_input.strip():
             model_obj = results[selected_model]["model"]
             pred, phish_prob, processed = predict_email(email_input, vec, model_obj)
-
+ 
             is_phish  = pred == 1
             label_str = "⚠️ PHISHING" if is_phish else "✅ LEGITIMATE"
             box_class = "phish-box" if is_phish else "safe-box"
             color     = "#ff4d6d" if is_phish else "#00d9a3"
-
+ 
             st.markdown(f"""
             <div class="{box_class}">
               <h3 style="color:{color};margin:0 0 6px">{label_str}</h3>
@@ -668,9 +730,9 @@ with tab4:
               </p>
             </div>
             """, unsafe_allow_html=True)
-
+ 
             st.progress(phish_prob, text=f"Phishing confidence: {phish_prob*100:.1f}%")
-
+ 
             st.markdown("**Processed tokens:**")
             PHISH_WORDS = {
                 "verify","account","details","security","prize","immediately",
