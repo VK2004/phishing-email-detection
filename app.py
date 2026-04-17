@@ -558,9 +558,6 @@ with tab3:
 with tab4:
     st.subheader("🧪 Classify any email in real time")
     st.caption(f"Using **{selected_model}** — change the model in the sidebar.")
-
-    st.markdown("**Quick samples:**")
-    qc1, qc2, qc3, qc4 = st.columns(4)
     SAMPLES = {
         "⚠️ Phishing #1": {
             "from":     "Costco Shipping Agent <manager@cbcbuilding.com>",
