@@ -128,7 +128,7 @@ All models are regularised (`C=0.5` for LR and SVM) to prevent overfitting on th
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/phishing-email-detector.git
+git clone https://github.com/VK2004/phishing-email-detector.git
 cd phishing-email-detector
 
 # 2. (Optional) Create a virtual environment
@@ -257,4 +257,4 @@ The notebook covers all 9 pipeline steps with inline visualisations, confusion m
 
 ---
 
-*Built as part of a Natural Language Processing classification project.*
+*Built as part of a Data Driven Cybersecurity project.*
