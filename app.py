@@ -563,8 +563,25 @@ with tab4:
     qc1, qc2, qc3, qc4 = st.columns(4)
     samples = {
         "⚠️ Phishing #1": (
-            "URGENT: Your account has been compromised. Verify your identity immediately "
-            "to avoid suspension. Click here to update your billing information now."
+            "From: Peoples Bank"
+            "Subject: EFT Activity Notifi cation(Your payment is processing)"
+            "Your payment($495.42) is processing ."
+            "To verify that your payment was applied follow the steps below:"
+            "1. Access URL REMOVED FROM THIS EXAMPLE FOR SECURITY REASONS."
+            "2. Login and select Charter e-pay"
+            "3. Select Recent Activity on the left navigation"
+            "4. View Payment Status"
+            "Your one time EFT debit card payment dated Sunday 06/07/2005 MST is listed below."
+            "Expiration Date: Sunday 06/07/2005"
+            "Payment: $495.42"
+            "PLEASE NOTE: THIS PAYMENT IS A ‘REAL TIME’ PAYMENT PAID DIRECTLY FROM YOUR CHECKING"
+            "ACCOUNT WHEN YOU SUBMITTED YOUR PAYMENT."
+            "Thank you again for making a ONE TIME payment online."
+            "This email message is not set up to receive reply messages. If you have any questions regarding this email"
+            "notification of your account change, please contact us at URL REMOVED FROM THIS EXAMPLE FOR SECURITY REASONS."
+            "Thank you for using Peoples Bank Online for this request."
+            "Peoples Bank "
+            
         ),
         "⚠️ Phishing #2": (
             "Congratulations! You have been selected to receive a $500 prize. Enter your "
