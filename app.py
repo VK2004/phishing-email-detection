@@ -561,42 +561,80 @@ with tab4:
 
     st.markdown("**Quick samples:**")
     qc1, qc2, qc3, qc4 = st.columns(4)
-    samples = {
-        "⚠️ Phishing #1": (
-            "From: Peoples Bank"
-            "Subject: EFT Activity Notifi cation(Your payment is processing)"
-            "Your payment($495.42) is processing ."
-            "To verify that your payment was applied follow the steps below:"
-            "1. Access URL REMOVED FROM THIS EXAMPLE FOR SECURITY REASONS."
-            "2. Login and select Charter e-pay"
-            "3. Select Recent Activity on the left navigation"
-            "4. View Payment Status"
-            "Your one time EFT debit card payment dated Sunday 06/07/2005 MST is listed below."
-            "Expiration Date: Sunday 06/07/2005"
-            "Payment: $495.42"
-            "PLEASE NOTE: THIS PAYMENT IS A ‘REAL TIME’ PAYMENT PAID DIRECTLY FROM YOUR CHECKING"
-            "ACCOUNT WHEN YOU SUBMITTED YOUR PAYMENT."
-            "Thank you again for making a ONE TIME payment online."
-            "This email message is not set up to receive reply messages. If you have any questions regarding this email"
-            "notification of your account change, please contact us at URL REMOVED FROM THIS EXAMPLE FOR SECURITY REASONS."
-            "Thank you for using Peoples Bank Online for this request."
-            "Peoples Bank "
-            
-        ),
-        "⚠️ Phishing #2": (
-            "Congratulations! You have been selected to receive a $500 prize. Enter your "
-            "personal details and credit card information to claim your reward before it expires."
-        ),
-        "✅ Legitimate #1": (
-            "Hi team, please find the attached meeting agenda for Tuesday's quarterly review. "
-            "The project deadline has been updated — see the shared document."
-        ),
-        "✅ Legitimate #2": (
-            "Reminder: Please submit your timesheet by end of week so payroll can be processed. "
-            "The board meeting minutes are now available in the shared drive."
-        ),
+    SAMPLES = {
+        "⚠️ Phishing #1": {
+            "from":     "Costco Shipping Agent <manager@cbcbuilding.com>",
+            "to":       "alice@gmail.com",
+            "subject":  "Scheduled Home Delivery Problem",
+            "date":     "January 6, 2014 10:54:37 PM MST",
+            "reply_to": "Costco Shipping Agent <manager@cbcbuilding.com>",
+            "body": (
+                "Unfortunately the delivery of your order COS-0077945599 was cancelled since "
+                "the specified address of the recipient was not correct.\n\n"
+                "You are recommended to complete [this form] and send it back with your reply to us.\n\n"
+                "Please do this within the period of one week - if we don't get your timely reply "
+                "you will be paid your money back less 21% since your order was booked for Christmas.\n\n"
+                "1998 - 2013\n"
+                "Costco Wholesale Corporation. All rights reserved."
+            ),
+        },
+        "⚠️ Phishing #2": {
+            "from":    "Amazon Rewards <rewards@amaz0n-offers.net>",
+            "to":      "valued.customer@email.com",
+            "subject": "You have been selected — claim your $500 prize now!",
+            "body": (
+                "Congratulations!\n\n"
+                "You have been selected to receive a $500 Amazon gift card as part of our "
+                "annual customer loyalty programme.\n\n"
+                "To claim your reward before it expires in 24 hours, please follow these steps:\n"
+                "1. Click the link below to verify your identity\n"
+                "2. Enter your personal details and billing information\n"
+                "3. Your gift card will be delivered instantly\n\n"
+                "CLAIM YOUR PRIZE NOW → http://amaz0n-rewards-claim.net/verify\n\n"
+                "This offer expires in: 24 HOURS\n\n"
+                "If you do not claim your prize, it will be forfeited and reassigned.\n\n"
+                "Amazon Customer Rewards Team"
+            ),
+        },
+        "✅ Legitimate #1": {
+            "from":    "Sarah Johnson <s.johnson@company.com>",
+            "to":      "team@company.com",
+            "subject": "Agenda — Tuesday Quarterly Review Meeting",
+            "body": (
+                "Hi team,\n\n"
+                "Please find attached the meeting agenda for Tuesday's quarterly review at 2:00 PM.\n\n"
+                "Key items we'll be covering:\n"
+                "- Q1 performance summary\n"
+                "- Updated project timeline (deadline moved to March 15th)\n"
+                "- Budget review for Q2\n"
+                "- Team headcount planning\n\n"
+                "The shared document has been updated with the latest figures — please review "
+                "before the meeting so we can focus discussion time effectively.\n\n"
+                "Let me know if you have any agenda items to add.\n\n"
+                "Best regards,\n"
+                "Sarah Johnson\n"
+                "Project Manager, Operations"
+            ),
+        },
+        "✅ Legitimate #2": {
+            "from":    "HR Department <hr@company.com>",
+            "to":      "all-staff@company.com",
+            "subject": "Reminder: Timesheet submission due Friday",
+            "body": (
+                "Hi everyone,\n\n"
+                "This is a reminder that timesheets for the current pay period are due by "
+                "end of day this Friday.\n\n"
+                "Please submit via the HR portal at your earliest convenience to ensure payroll "
+                "is processed on time.\n\n"
+                "Additionally, the board meeting minutes from last Wednesday are now available "
+                "in the shared drive under /Company Docs/Board Minutes/.\n\n"
+                "If you have any questions about your timesheet or the payroll process, please "
+                "reach out to the HR team directly.\n\n"
+                "Thank you,\n"
+                "HR Department"
+            ),
+        },
     }
-
     if "email_text" not in st.session_state:
         st.session_state.email_text = list(samples.values())[0]
 
