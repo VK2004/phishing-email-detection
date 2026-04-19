@@ -493,6 +493,17 @@ with tab1:
     st.subheader("Model comparison")
     st.pyplot(plot_model_comparison(results), use_container_width=True)
 
+# ══════════════════════════════════════
+# TAB 2 — MODEL ANALYSIS
+# ══════════════════════════════════════
+with tab2:
+    st.subheader("Confusion matrices")
+    # All 4 in one row — compact figsize keeps them from being oversized
+    cm_cols = st.columns(4)
+    for col, (name, res) in zip(cm_cols, results.items()):
+        with col:
+            st.pyplot(plot_confusion_matrix(res["cm"], name), use_container_width=True)
+
     st.markdown("---")
     st.subheader("All model metrics")
     metric_rows = []
@@ -506,19 +517,7 @@ with tab1:
             "ROC-AUC":   f"{res['roc_auc']:.4f}",
         })
     st.dataframe(pd.DataFrame(metric_rows).set_index("Model"), use_container_width=True)
-
-
-# ══════════════════════════════════════
-# TAB 2 — MODEL ANALYSIS
-# ══════════════════════════════════════
-with tab2:
-    st.subheader("Confusion matrices")
-    # All 4 in one row — compact figsize keeps them from being oversized
-    cm_cols = st.columns(4)
-    for col, (name, res) in zip(cm_cols, results.items()):
-        with col:
-            st.pyplot(plot_confusion_matrix(res["cm"], name), use_container_width=True)
-
+  
     st.markdown("---")
     st.subheader("ROC curves")
     col_roc, col_pad = st.columns([1, 1])
@@ -560,23 +559,7 @@ with tab4:
     st.caption(f"Using **{selected_model}** — change the model in the sidebar.")
     SAMPLES = {
         "⚠️ Phishing #1": {
-            "from":     "Costco Shipping Agent <manager@cbcbuilding.com>",
-            "to":       "alice@gmail.com",
-            "subject":  "Scheduled Home Delivery Problem",
-            "date":     "January 6, 2014 10:54:37 PM MST",
-            "reply_to": "Costco Shipping Agent <manager@cbcbuilding.com>",
-            "body": (
-                "Unfortunately the delivery of your order COS-0077945599 was cancelled since "
-                "the specified address of the recipient was not correct.\n\n"
-                "You are recommended to complete [this form] and send it back with your reply to us.\n\n"
-                "Please do this within the period of one week - if we don't get your timely reply "
-                "you will be paid your money back less 21% since your order was booked for Christmas.\n\n"
-                "1998 - 2013\n"
-                "Costco Wholesale Corporation. All rights reserved."
-            ),
-        },
-        "⚠️ Phishing #2": {
-            "from":    "Amazon Rewards <rewards@amaz0n-offers.net>",
+          "from":    "Amazon Rewards <rewards@amaz0n-offers.net>",
             "to":      "valued.customer@email.com",
             "subject": "You have been selected — claim your $500 prize now!",
             "body": (
@@ -591,6 +574,23 @@ with tab4:
                 "This offer expires in: 24 HOURS\n\n"
                 "If you do not claim your prize, it will be forfeited and reassigned.\n\n"
                 "Amazon Customer Rewards Team"
+           
+            ),
+        },
+        "⚠️ Phishing #2": {
+            "from":     "Costco Shipping Agent <manager@cbcbuilding.com>",
+            "to":       "alice@gmail.com",
+            "subject":  "Scheduled Home Delivery Problem",
+            "date":     "January 6, 2014 10:54:37 PM MST",
+            "reply_to": "Costco Shipping Agent <manager@cbcbuilding.com>",
+            "body": (
+                "Unfortunately the delivery of your order COS-0077945599 was cancelled since "
+                "the specified address of the recipient was not correct.\n\n"
+                "You are recommended to complete [this form] and send it back with your reply to us.\n\n"
+                "Please do this within the period of one week - if we don't get your timely reply "
+                "you will be paid your money back less 21% since your order was booked for Christmas.\n\n"
+                "1998 - 2013\n"
+                "Costco Wholesale Corporation. All rights reserved."
             ),
         },
         "✅ Legitimate #1": {
