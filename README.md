@@ -230,7 +230,7 @@ The sidebar lets you adjust TF-IDF max features (1,000–10,000), n-gram size, t
 
 Open `phishing_detector.ipynb` directly in Google Colab for a fully interactive, step-by-step walkthrough:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/phishing-email-detector/blob/main/phishing_detector.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VK2004/phishing-email-detector/blob/main/phishing_detector.ipynb)
 
 The notebook covers all 9 pipeline steps with inline visualisations, confusion matrices, ROC curves, and a live inference cell at the end where you can test your own email text.
 
